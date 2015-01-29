@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 
 years = [int(re.findall('\d{4}', file)[0]) for file in os.listdir('names') if re.search('\d{4}', file)]
 
+
 frames = []
 for yr in years:
     df = pd.read_csv('names/yob%d.txt' % yr, names=['Name','Sex','Births'])
@@ -27,16 +28,29 @@ names = pd.concat(frames, ignore_index=True)
 
 ###################################################################################
 # Q1
+
 if False :
-    df = names[names['Year']==1914]
-    print 'Question 1:', df['Births'].sum(), 'Babies Born'
+    test = names['Year']==1914
+    
+    print test
+    
+    df = names[test]
+    
+    solution = df['Births'].sum()
+    #print 'Question 1:', df['Births'].sum(), 'Babies Born'
 
 ###################################################################################
 # Q2
+
 if False:
     year_list = []
     ratio_list = []
-    for year, group in names.groupby('Year'):
+    
+    grouped = names.groupby('Year')
+    
+    for year, group in grouped:
+        #print year, group
+        
         year_list.append(year)
         gen_dict = {}
         for gender, gp in group.groupby('Sex'):
@@ -55,6 +69,7 @@ if False:
     for year, group in names[names['Name']==my_name].groupby('Year'):
         year_list.append(year)
         count_list.append(group['Births'].sum())
+        
     for yr in years :
         if yr not in year_list :
             year_list.append(yr)
@@ -64,13 +79,14 @@ if False:
     plt.show()
     
 ###################################################################################
-# Q3
+# Q4
 if True:
     year_list = []
     letter_list = []
     for year, group in names.groupby('Year'):
         year_list.append(year)
-        letter_list.append((group.apply(lambda row: len(row['Name']), axis=1)*group['Births']).sum()/float(group['Births'].sum()))
+        letter_list.append((group.apply(lambda row : len(row['Name']), axis=1)*group['Births']).sum()/float(group['Births'].sum()))
+        
     plt.plot(year_list,letter_list)
     plt.show()
         
