@@ -38,8 +38,6 @@ if False:
     
 ###################################################################    
 # Q3
-
-
 if False:
     names['%']=np.zeros(names.shape[0])
     for year, group in names.groupby('Year'):      
@@ -47,10 +45,3 @@ if False:
         names.loc[names['Year']==year, '%'] = names.loc[names['Year']==year, 'Births']/float(total_births)
 
     print names
-
-    
-
-
-
-
-
